@@ -1,10 +1,12 @@
 #include <cassert>
+#include <new>
 
 #include "my_vector.hpp"
 
 int main(int argc, char *argv[]) {
-  auto v = my_vector<int>();
+  void *ptr = ::operator new(sizeof(my_vector<int>));
+  auto v_ptr = new (ptr) my_vector<int>{};
 
-  assert(v.size() == 0);
+  assert(v_ptr->size() == 0);
   return 0;
 }
