@@ -49,8 +49,10 @@ public:
   pointer data() { return first_; }
   reference operator[](size_type index) { return *(first_ + index); }
 
+  void clear() { destroy_until(rend()); }
+
   ~my_vector() {
-    destroy_until(rend());
+    clear();
     traits::deallocate(allocator_, first_, size());
   }
 
