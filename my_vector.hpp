@@ -12,7 +12,8 @@ public:
   using iterator = pointer;
 
   my_vector(const allocator_type &allocator = allocator_type())
-      : first_(nullptr), last_(nullptr), allocator_(allocator) {}
+      : first_(nullptr), last_(nullptr), reserved_last_(nullptr),
+        allocator_(allocator) {}
 
   my_vector(size_type size, const allocator_type &allocator = allocator_type())
       : my_vector(allocator) {
@@ -25,6 +26,7 @@ public:
   }
 
   size_type size() { return end() - begin(); }
+  size_type capacity() { return reserved_last_ - first_; }
   bool empty() { return begin() == end(); }
 
   reference front() { return *begin(); }
@@ -59,7 +61,7 @@ public:
 private:
   using traits = std::allocator_traits<allocator_type>;
 
-  pointer first_, last_;
+  pointer first_, last_, reserved_last_;
   allocator_type allocator_;
 
   void destroy_until(std::reverse_iterator<iterator> rend) {

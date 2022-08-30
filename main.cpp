@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
   auto empty_v = my_vector<int>{};
   assert(empty_v.size() == 0);
   assert(empty_v.empty() == true);
+  assert(empty_v.capacity() == 0);
 
   return 0;
 }
