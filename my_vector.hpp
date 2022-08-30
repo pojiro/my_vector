@@ -16,10 +16,25 @@ public:
     last_ = first_ + size;
   }
 
-  size_type size() { return static_cast<size_type>(last_ - first_); }
+  size_type size() {
+    size_type size;
+    if (first_ == last_) {
+      size = 0;
+    } else {
+      size = last_ - first_;
+    }
+    return static_cast<size_type>(size);
+  }
 
   reference front() { return this->operator[](0); }
-  reference back() { return this->operator[](size() - 1); };
+  reference back() {
+    size_type size = this->size();
+    if (size == 0) {
+      return front();
+    } else {
+      return this->operator[](size - 1);
+    }
+  };
 
   reference operator[](size_type index) { return *(first_ + index); }
 
