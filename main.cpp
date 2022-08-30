@@ -27,5 +27,10 @@ int main(int argc, char *argv[]) {
   assert(empty_v.empty() == true);
   assert(empty_v.capacity() == 0);
 
+  empty_v.reserve(5);
+  assert(empty_v.capacity() == 5);
+  empty_v.reserve(1);
+  assert(empty_v.capacity() == 5);
+
   return 0;
 }

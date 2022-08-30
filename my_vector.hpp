@@ -25,6 +25,33 @@ public:
     }
   }
 
+  void reserve(size_type size) {
+    if (capacity() > size)
+      return;
+
+    auto old_first = first_;
+    auto old_last = last_;
+    auto old_capacity = capacity();
+
+    first_ = traits::allocate(allocator_, size);
+    last_ = first_;
+    reserved_last_ = first_ + size;
+
+    for (auto old_iterator = old_first; old_iterator != old_last;
+         ++old_iterator, ++last_) {
+      // TODO: implement copy constructor
+      traits::construct(allocator_, last_, std::move(*old_iterator));
+    }
+
+    for (auto riterator = std::reverse_iterator<iterator>(old_last),
+              rend = std::reverse_iterator<iterator>(old_first);
+         riterator != rend; ++riterator) {
+      traits::destroy(allocator_, &*riterator);
+    }
+
+    traits::deallocate(allocator_, old_first, old_capacity);
+  }
+
   size_type size() { return end() - begin(); }
   size_type capacity() { return reserved_last_ - first_; }
   bool empty() { return begin() == end(); }
