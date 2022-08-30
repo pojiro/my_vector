@@ -13,5 +13,9 @@ int main(int argc, char *argv[]) {
   v.front() = 1;
   assert(v.front() == 1);
 
+  assert(v[1] == 0);
+  v[1] = 1;
+  assert(v[1] == 1);
+
   return 0;
 }

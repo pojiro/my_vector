@@ -17,6 +17,8 @@ public:
 
   T &front() { return *pointer_; }
 
+  T &operator[](std::size_t index) { return *(pointer_ + index); }
+
   ~my_vector() { traits::deallocate(allocator_, pointer_, size_); }
 
 private:
