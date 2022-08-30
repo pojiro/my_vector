@@ -7,4 +7,10 @@ program: main.cpp my_vector.hpp
 clean:
 	rm -f ./program
 
-.PHONY: run clean
+watch:
+	@while true; do \
+	  inotifywait -qq --recursive --event modify --timeout 0 --exclude ".*\.swp" .; \
+	  make run; \
+	done
+
+.PHONY: watch run clean
