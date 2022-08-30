@@ -28,13 +28,7 @@ public:
   bool empty() { return begin() == end(); }
 
   reference front() { return *begin(); }
-  reference back() {
-    if (begin() == end()) {
-      return front();
-    } else {
-      return *(end() - 1);
-    }
-  };
+  reference back() { return *rbegin(); };
 
   iterator begin() { return first_; }
   iterator end() { return last_; }
