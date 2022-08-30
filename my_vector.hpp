@@ -32,6 +32,13 @@ public:
   iterator begin() { return first_; }
   iterator end() { return last_; }
 
+  reference at(size_type index) {
+    if (index >= size())
+      throw std::out_of_range("index is out of range.");
+
+    return operator[](index);
+  }
+
   reference operator[](size_type index) { return *(first_ + index); }
 
   ~my_vector() { traits::deallocate(allocator_, first_, size()); }
