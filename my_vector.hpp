@@ -9,6 +9,7 @@ public:
   using reference = T &;
   using allocator_type = Allocator;
   using size_type = std::size_t;
+  using iterator = pointer;
 
   my_vector(size_type size = 0, allocator_type allocator = allocator_type())
       : allocator_(allocator) {
@@ -35,6 +36,9 @@ public:
       return this->operator[](size - 1);
     }
   };
+
+  iterator begin() { return first_; }
+  iterator end() { return last_; }
 
   reference operator[](size_type index) { return *(first_ + index); }
 
