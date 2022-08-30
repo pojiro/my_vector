@@ -15,6 +15,8 @@ public:
 
   std::size_t size() { return size_; }
 
+  T &front() { return *pointer_; }
+
   ~my_vector() { traits::deallocate(allocator_, pointer_, size_); }
 
 private:
