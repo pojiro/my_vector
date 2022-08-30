@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
   auto v = my_vector<int>{size};
 
   assert(v.size() == size);
+  assert(v.empty() == false);
 
   assert(v.front() == 0);
   v.front() = 1;
@@ -23,6 +24,7 @@ int main(int argc, char *argv[]) {
 
   auto empty_v = my_vector<int>{};
   assert(empty_v.size() == 0);
+  assert(empty_v.empty() == true);
 
   return 0;
 }

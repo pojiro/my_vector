@@ -18,6 +18,7 @@ public:
   }
 
   size_type size() { return end() - begin(); }
+  bool empty() { return begin() == end(); }
 
   reference front() { return *begin(); }
   reference back() {
