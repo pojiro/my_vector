@@ -19,13 +19,12 @@ public:
 
   size_type size() { return end() - begin(); }
 
-  reference front() { return this->operator[](0); }
+  reference front() { return *begin(); }
   reference back() {
-    size_type size = this->size();
-    if (size == 0) {
+    if (begin() == end()) {
       return front();
     } else {
-      return this->operator[](size - 1);
+      return *(end() - 1);
     }
   };
 
