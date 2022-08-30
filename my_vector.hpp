@@ -39,6 +39,7 @@ public:
     return operator[](index);
   }
 
+  pointer data() { return first_; }
   reference operator[](size_type index) { return *(first_ + index); }
 
   ~my_vector() { traits::deallocate(allocator_, first_, size()); }
