@@ -11,22 +11,22 @@ public:
   using size_type = std::size_t;
 
   my_vector(size_type size = 0, allocator_type allocator = allocator_type())
-      : allocator_(allocator), size_(size) {
-    first_ = traits::allocate(allocator_, size_);
+      : allocator_(allocator) {
+    first_ = traits::allocate(allocator_, size);
+    last_ = first_ + size;
   }
 
-  size_type size() { return size_; }
+  size_type size() { return static_cast<size_type>(last_ - first_); }
 
   reference front() { return *first_; }
 
   reference operator[](size_type index) { return *(first_ + index); }
 
-  ~my_vector() { traits::deallocate(allocator_, first_, size_); }
+  ~my_vector() { traits::deallocate(allocator_, first_, size()); }
 
 private:
   using traits = std::allocator_traits<allocator_type>;
 
-  pointer first_;
+  pointer first_, last_;
   allocator_type allocator_;
-  size_type size_;
 };
