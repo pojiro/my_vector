@@ -22,6 +22,9 @@ int main(int argc, char *argv[]) {
   v[1] = 1;
   assert(v[1] == 1);
 
+  v.resize(3);
+  assert(v.size() == 3);
+
   auto empty_v = my_vector<int>{};
   assert(empty_v.size() == 0);
   assert(empty_v.empty() == true);

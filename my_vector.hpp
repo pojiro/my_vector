@@ -17,12 +17,7 @@ public:
 
   my_vector(size_type size, const allocator_type &allocator = allocator_type())
       : my_vector(allocator) {
-    first_ = traits::allocate(allocator_, size);
-    last_ = first_ + size;
-
-    for (auto p = first_; p != last_; ++p) {
-      traits::construct(allocator_, p, T{});
-    }
+    resize(size);
   }
 
   void reserve(size_type size) {
@@ -50,6 +45,26 @@ public:
     }
 
     traits::deallocate(allocator_, old_first, old_capacity);
+  }
+
+  void resize(size_type size) {
+    auto current_size = this->size();
+
+    if (size == current_size)
+      return;
+
+    if (size < current_size) {
+      destroy_until(rbegin() + current_size - size);
+      return;
+    }
+
+    if (size > current_size) {
+      reserve(size);
+      for (; last_ != reserved_last_; ++last_) {
+        traits::construct(allocator_, last_);
+      }
+      return;
+    }
   }
 
   size_type size() { return end() - begin(); }
