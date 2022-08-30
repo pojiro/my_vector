@@ -20,6 +20,17 @@ public:
     resize(size);
   }
 
+  my_vector(const my_vector &v) : allocator_(v.allocator_) {
+    auto size = v.size();
+    reserve(size);
+    for (auto source_iterator = v.begin(), destination_iterator = begin();
+         source_iterator != v.end();
+         ++source_iterator, ++destination_iterator) {
+      traits::construct(allocator_, &*destination_iterator, *source_iterator);
+    }
+    last_ = first_ + size;
+  }
+
   void reserve(size_type size) {
     if (capacity() > size)
       return;
@@ -34,7 +45,6 @@ public:
 
     for (auto old_iterator = old_first; old_iterator != old_last;
          ++old_iterator, ++last_) {
-      // TODO: implement copy constructor
       traits::construct(allocator_, last_, std::move(*old_iterator));
     }
 
