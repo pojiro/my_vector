@@ -12,21 +12,21 @@ public:
 
   my_vector(size_type size = 0, allocator_type allocator = allocator_type())
       : allocator_(allocator), size_(size) {
-    pointer_ = traits::allocate(allocator_, size_);
+    first_ = traits::allocate(allocator_, size_);
   }
 
   size_type size() { return size_; }
 
-  reference front() { return *pointer_; }
+  reference front() { return *first_; }
 
-  reference operator[](size_type index) { return *(pointer_ + index); }
+  reference operator[](size_type index) { return *(first_ + index); }
 
-  ~my_vector() { traits::deallocate(allocator_, pointer_, size_); }
+  ~my_vector() { traits::deallocate(allocator_, first_, size_); }
 
 private:
   using traits = std::allocator_traits<allocator_type>;
 
-  pointer pointer_;
+  pointer first_;
   allocator_type allocator_;
   size_type size_;
 };
