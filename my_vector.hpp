@@ -11,10 +11,17 @@ public:
   using size_type = std::size_t;
   using iterator = pointer;
 
-  my_vector(size_type size = 0, allocator_type allocator = allocator_type())
-      : allocator_(allocator) {
+  my_vector(const allocator_type &allocator = allocator_type())
+      : first_(nullptr), last_(nullptr), allocator_(allocator) {}
+
+  my_vector(size_type size, const allocator_type &allocator = allocator_type())
+      : my_vector(allocator) {
     first_ = traits::allocate(allocator_, size);
     last_ = first_ + size;
+
+    for (auto p = first_; p != last_; ++p) {
+      traits::construct(allocator_, p, T{});
+    }
   }
 
   size_type size() { return end() - begin(); }
@@ -42,7 +49,13 @@ public:
   pointer data() { return first_; }
   reference operator[](size_type index) { return *(first_ + index); }
 
-  ~my_vector() { traits::deallocate(allocator_, first_, size()); }
+  ~my_vector() {
+    for (auto p = last_ - 1; p != first_ - 1; --p) {
+      traits::destroy(allocator_, p);
+    }
+
+    traits::deallocate(allocator_, first_, size());
+  }
 
 private:
   using traits = std::allocator_traits<allocator_type>;
