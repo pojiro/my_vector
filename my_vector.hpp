@@ -18,7 +18,8 @@ public:
 
   size_type size() { return static_cast<size_type>(last_ - first_); }
 
-  reference front() { return *first_; }
+  reference front() { return this->operator[](0); }
+  reference back() { return this->operator[](size() - 1); };
 
   reference operator[](size_type index) { return *(first_ + index); }
 
