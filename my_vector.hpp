@@ -56,10 +56,7 @@ public:
   reference operator[](size_type index) { return *(first_ + index); }
 
   ~my_vector() {
-    for (auto p = last_ - 1; p != first_ - 1; --p) {
-      traits::destroy(allocator_, p);
-    }
-
+    destroy_until(rend());
     traits::deallocate(allocator_, first_, size());
   }
 
@@ -68,4 +65,10 @@ private:
 
   pointer first_, last_;
   allocator_type allocator_;
+
+  void destroy_until(std::reverse_iterator<iterator> rend) {
+    for (auto riterator = rbegin(); riterator != rend; ++riterator, --last_) {
+      traits::destroy(allocator_, &*riterator);
+    }
+  }
 };
