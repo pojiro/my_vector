@@ -4,8 +4,9 @@
 #include "my_vector.hpp"
 
 int main(int argc, char *argv[]) {
-  auto v_ptr = new my_vector<int>{};
+  std::size_t size = 5;
+  auto v = my_vector<int>{size};
 
-  assert(v_ptr->size() == 0);
+  assert(v.size() == size);
   return 0;
 }
