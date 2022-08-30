@@ -17,15 +17,7 @@ public:
     last_ = first_ + size;
   }
 
-  size_type size() {
-    size_type size;
-    if (first_ == last_) {
-      size = 0;
-    } else {
-      size = last_ - first_;
-    }
-    return static_cast<size_type>(size);
-  }
+  size_type size() { return end() - begin(); }
 
   reference front() { return this->operator[](0); }
   reference back() {
