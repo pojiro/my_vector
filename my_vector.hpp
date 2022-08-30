@@ -38,6 +38,12 @@ public:
 
   iterator begin() { return first_; }
   iterator end() { return last_; }
+  std::reverse_iterator<iterator> rbegin() {
+    return std::reverse_iterator<iterator>{end()};
+  }
+  std::reverse_iterator<iterator> rend() {
+    return std::reverse_iterator<iterator>{begin()};
+  }
 
   reference at(size_type index) {
     if (index >= size())
